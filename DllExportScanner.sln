@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DllExportScanner", "DllExportScanner\DllExportScanner.csproj", "{677118CC-5310-4D66-9635-B24F3A01A526}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DllExportScanner.UnitTest", "DllExportScanner.UnitTest\DllExportScanner.UnitTest.csproj", "{7FF73E00-97D7-4772-977C-38828407777A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{677118CC-5310-4D66-9635-B24F3A01A526}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677118CC-5310-4D66-9635-B24F3A01A526}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677118CC-5310-4D66-9635-B24F3A01A526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF73E00-97D7-4772-977C-38828407777A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF73E00-97D7-4772-977C-38828407777A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF73E00-97D7-4772-977C-38828407777A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF73E00-97D7-4772-977C-38828407777A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
