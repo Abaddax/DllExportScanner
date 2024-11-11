@@ -28,9 +28,9 @@ namespace DllExportScanner.UnitTest
 
                 Assert.AreNotEqual(0, exports.Count);
 
-                Assert.AreEqual(true, exports.Any(e => e.FunctionSignature == "CreateDXGIFactory"));
-                Assert.AreEqual(true, exports.Any(e => e.FunctionSignature == "CreateDXGIFactory1"));
-                Assert.AreEqual(true, exports.Any(e => e.FunctionSignature == "CreateDXGIFactory2"));
+                Assert.IsTrue(exports.Any(e => e.FunctionSignature == "CreateDXGIFactory" && e.LibraryName == "dxgi"));
+                Assert.IsTrue(exports.Any(e => e.FunctionSignature == "CreateDXGIFactory1" && e.LibraryName == "dxgi"));
+                Assert.IsTrue(exports.Any(e => e.FunctionSignature == "CreateDXGIFactory2" && e.LibraryName == "dxgi"));
             }
             else
             {
@@ -40,9 +40,9 @@ namespace DllExportScanner.UnitTest
             //Common tests
             foreach (var export in exports)
             {
-                Assert.AreEqual(false, string.IsNullOrEmpty(export.FunctionSignature));
-                Assert.AreEqual(false, string.IsNullOrEmpty(export.LibraryName));
-                Assert.AreEqual(false, string.IsNullOrEmpty(export.LibraryVersion));
+                Assert.IsFalse(string.IsNullOrEmpty(export.FunctionSignature));
+                Assert.IsFalse(string.IsNullOrEmpty(export.LibraryName));
+                Assert.IsFalse(string.IsNullOrEmpty(export.LibraryVersion));
             }
         }
 
