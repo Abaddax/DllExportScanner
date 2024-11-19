@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static DllExportScanner.Windows.DbgHelp;
 
 namespace DllExportScanner
@@ -71,7 +66,7 @@ namespace DllExportScanner
                 if (baseOfDll == 0)
                     throw new Exception($"SymLoadModuleEx failed for {libraryPath}.");
 
-                var exports = new List<string>();                
+                var exports = new List<string>();
 
                 //Callback
                 bool EnumSymProc(ref SYMBOL_INFO pSymInfo, UInt32 SymbolSize, IntPtr UserContext)
