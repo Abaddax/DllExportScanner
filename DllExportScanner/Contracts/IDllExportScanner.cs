@@ -1,4 +1,4 @@
-﻿namespace DllExportScanner
+﻿namespace DllExportScanner.Contracts
 {
     public interface IDllExportScanner
     {

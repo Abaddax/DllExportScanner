@@ -1,10 +1,13 @@
-﻿using System.Diagnostics;
+﻿using DllExportScanner.Contracts;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static DllExportScanner.Windows.DbgHelp;
+using System.Runtime.Versioning;
+using static DllExportScanner.Internal.Windows.DbgHelp;
 
-namespace DllExportScanner
+namespace DllExportScanner.Internal.Windows
 {
-    internal class DllExportScannerWindows : IDllExportScanner
+    [SupportedOSPlatform("windows")]
+    internal sealed class DllExportScannerWindows : IDllExportScanner
     {
         public List<FunctionExport> ListExports(string binaryName, params string[] binaryDirs)
         {
@@ -35,7 +38,7 @@ namespace DllExportScanner
                         LibraryName = name,
                         LibraryVersion = version,
                     });
-                };
+                }
             }
             return exports;
         }
