@@ -1,10 +1,10 @@
-﻿using DllExportScanner.Contracts;
+using Abaddax.DllExportScanner.Contracts;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using static DllExportScanner.Internal.Windows.DbgHelp;
+using static Abaddax.DllExportScanner.Internal.Windows.DbgHelp;
 
-namespace DllExportScanner.Internal.Windows
+namespace Abaddax.DllExportScanner.Internal.Windows
 {
     [SupportedOSPlatform("windows")]
     internal sealed class DllExportScannerWindows : IDllExportScanner
@@ -21,7 +21,7 @@ namespace DllExportScanner.Internal.Windows
                 }
             }
 
-            List<FunctionExport> exports = new();
+            List<FunctionExport> allExports = new();
             foreach (var binaryPath in binaryPaths)
             {
                 var fullName = Path.GetFileNameWithoutExtension(binaryPath);
@@ -29,10 +29,10 @@ namespace DllExportScanner.Internal.Windows
                 var name = fullName;
                 var versionInfo = FileVersionInfo.GetVersionInfo(binaryPath);
                 var version = $"{versionInfo.FileMajorPart}.{versionInfo.FileMinorPart}.{versionInfo.FileBuildPart}.{versionInfo.FilePrivatePart}";
-                var _exports = GetExports(binaryPath);
-                foreach (var export in _exports)
+                var exports = GetExports(binaryPath);
+                foreach (var export in exports)
                 {
-                    exports.Add(new FunctionExport()
+                    allExports.Add(new FunctionExport()
                     {
                         FunctionSignature = export,
                         LibraryName = name,
@@ -40,7 +40,7 @@ namespace DllExportScanner.Internal.Windows
                     });
                 }
             }
-            return exports;
+            return allExports;
         }
 
         private static IEnumerable<string> GetExports(string libraryPath)
@@ -51,7 +51,7 @@ namespace DllExportScanner.Internal.Windows
             var status_ = SymSetOptions(SymOpt.PUBLICS_ONLY);
 
             var status = SymInitialize(process.Handle,
-                null,
+                null!,
                 false);
             if (!status)
                 throw new Exception("SymInitialize failed.");
@@ -61,7 +61,7 @@ namespace DllExportScanner.Internal.Windows
                 var baseOfDll = SymLoadModuleEx(process.Handle,
                     IntPtr.Zero,
                     libraryPath,
-                    null,
+                    null!,
                     IntPtr.Zero,
                     0,
                     IntPtr.Zero,
@@ -72,7 +72,7 @@ namespace DllExportScanner.Internal.Windows
                 var exports = new List<string>();
 
                 //Callback
-                bool EnumSymProc(ref SYMBOL_INFO pSymInfo, UInt32 SymbolSize, IntPtr UserContext)
+                bool EnumSymProc(ref SYMBOL_INFO pSymInfo, uint SymbolSize, IntPtr UserContext)
                 {
                     //Console.WriteLine(pSymInfo.Address + " " + SymbolSize + " " + pSymInfo.Name);
                     exports.Add(pSymInfo.Name);

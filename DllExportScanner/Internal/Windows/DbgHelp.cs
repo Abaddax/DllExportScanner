@@ -1,7 +1,9 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
-namespace DllExportScanner.Internal.Windows
+#pragma warning disable
+
+namespace Abaddax.DllExportScanner.Internal.Windows
 {
     /// <summary>
     /// https://stackoverflow.com/questions/12656737/how-to-obtain-the-dll-list-of-a-specified-process-and-loop-through-it-to-check-i

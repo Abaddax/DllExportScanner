@@ -1,10 +1,8 @@
-using System.Net;
-using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
-namespace DllExportScanner.Tests
+namespace Abaddax.DllExportScanner.Tests
 {
-    public class Tests
+    public class DllExportScannerTests
     {
         private const string _nativeLibraryName = "DllExportScanner.Tests.Native";
         private string _nativeFileName;
@@ -20,7 +18,7 @@ namespace DllExportScanner.Tests
                 _ when RuntimeInformation.IsOSPlatform(OSPlatform.Linux) => ($"lib{_nativeLibraryName}.so", "../../../../DllExportScanner.Tests.Native/out/install/lib/"),
                 _ => throw new PlatformNotSupportedException()
             };
-     
+
             _nativeFilePath = Path.GetFullPath(_nativeFilePath);
             if (!Directory.Exists(_nativeFilePath))
                 throw new DirectoryNotFoundException("Build the native binaries before running the tests.");
@@ -56,8 +54,6 @@ namespace DllExportScanner.Tests
                 Assert.That(export.LibraryName, Is.Not.Null.And.Not.Empty);
                 Assert.That(export.LibraryVersion, Is.Not.Null.And.Not.Empty);
             }
-
-           
         }
     }
 }

@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Abaddax.$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>Abaddax.$(MSBuildProjectName)</AssemblyName>
+    <PackageId>Abaddax.$(MSBuildProjectName)</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -25,6 +30,15 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\DllExportScanner.Tests.Native\**\*.*" 
+          Exclude="..\DllExportScanner.Tests.Native\.*\**;..\DllExportScanner.Tests.Native\out\build\**">
+      <Link>DllExportScanner.Tests.Native\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Pack>false</Pack>
+    </None>
+  </ItemGroup>
+    
   <Target Name="BuildNative" BeforeTargets="Build">
     <Exec Command="cmake -S ../DllExportScanner.Tests.Native -B ../DllExportScanner.Tests.Native/out/build -DCMAKE_BUILD_TYPE=$(Configuration)"/>
     <Exec Command="cmake --build ../DllExportScanner.Tests.Native/out/build --target DllExportScanner.Tests.Native --config $(Configuration)"/>

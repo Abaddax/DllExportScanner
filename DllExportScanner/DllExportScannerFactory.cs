@@ -1,16 +1,16 @@
-﻿using DllExportScanner.Contracts;
-using DllExportScanner.Internal.Linux;
-using DllExportScanner.Internal.Windows;
+using Abaddax.DllExportScanner.Contracts;
+using Abaddax.DllExportScanner.Internal.Linux;
+using Abaddax.DllExportScanner.Internal.Windows;
 using System.Runtime.InteropServices;
 
-namespace DllExportScanner
+namespace Abaddax.DllExportScanner
 {
     public static class DllExportScannerFactory
     {
-        private static IDllExportScanner? _scanner = null;
+        private static IDllExportScanner? _Scanner = null;
         public static IDllExportScanner GetScanner()
         {
-            return _scanner ??= RuntimeInformation.OSDescription switch
+            return _Scanner ??= RuntimeInformation.OSDescription switch
             {
                 _ when RuntimeInformation.IsOSPlatform(OSPlatform.Windows) => new DllExportScannerWindows(),
                 _ when RuntimeInformation.IsOSPlatform(OSPlatform.Linux) => new DllExportScannerLinux(),

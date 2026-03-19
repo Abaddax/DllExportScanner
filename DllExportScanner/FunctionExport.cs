@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
-namespace DllExportScanner
+namespace Abaddax.DllExportScanner
 {
     [DebuggerDisplay("{FunctionSignature}, {LibraryName}-{LibraryVersion}")]
-    public struct FunctionExport
+    public readonly record struct FunctionExport
     {
         public string FunctionSignature { get; init; }
         public string LibraryName { get; init; }

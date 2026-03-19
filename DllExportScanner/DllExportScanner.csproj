@@ -1,9 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+  <PropertyGroup><RootNamespace>Abaddax.$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>Abaddax.$(MSBuildProjectName)</AssemblyName>
+    <PackageId>Abaddax.$(MSBuildProjectName)</PackageId>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <Version>0.1.1</Version>
+    <Description>A simple library to list exported symbols of shared native libraries</Description>
+    <Authors>Abaddax</Authors>
+    <RepositoryUrl>https://github.com/Abaddax/DllExportScanner.git</RepositoryUrl>
+    <ExternalPackageLicenseFile>../LICENSE</ExternalPackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abaddax.Build.Common" Version="0.0.1-preview6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

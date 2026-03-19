@@ -1,4 +1,4 @@
-﻿namespace DllExportScanner.Contracts
+namespace Abaddax.DllExportScanner.Contracts
 {
     public interface IDllExportScanner
     {

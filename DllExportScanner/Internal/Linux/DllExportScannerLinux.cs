@@ -1,8 +1,8 @@
-﻿using DllExportScanner.Contracts;
+using Abaddax.DllExportScanner.Contracts;
 using System.Diagnostics;
 using System.Runtime.Versioning;
 
-namespace DllExportScanner.Internal.Linux
+namespace Abaddax.DllExportScanner.Internal.Linux
 {
     [SupportedOSPlatform("linux")]
     internal sealed class DllExportScannerLinux : IDllExportScanner
@@ -19,7 +19,7 @@ namespace DllExportScanner.Internal.Linux
                 }
             }
 
-            List<FunctionExport> exports = new();
+            List<FunctionExport> allExports = new();
             foreach (var binaryPath in binaryPaths)
             {
                 var fullName = Path.GetFileNameWithoutExtension(binaryPath);
@@ -27,10 +27,10 @@ namespace DllExportScanner.Internal.Linux
                 var name = fullName;
                 var versionInfo = FileVersionInfo.GetVersionInfo(binaryPath);
                 var version = $"{versionInfo.FileMajorPart}.{versionInfo.FileMinorPart}.{versionInfo.FileBuildPart}.{versionInfo.FilePrivatePart}";
-                var _exports = GetExports(binaryPath);
-                foreach (var export in _exports)
+                var exports = GetExports(binaryPath);
+                foreach (var export in exports)
                 {
-                    exports.Add(new FunctionExport()
+                    allExports.Add(new FunctionExport()
                     {
                         FunctionSignature = export,
                         LibraryName = name,
@@ -39,7 +39,7 @@ namespace DllExportScanner.Internal.Linux
                 }
                 ;
             }
-            return exports;
+            return allExports;
         }
 
         private static IEnumerable<string> GetExports(string libraryPath)
@@ -47,23 +47,34 @@ namespace DllExportScanner.Internal.Linux
             string output;
             using (var process = new Process())
             {
-                var startInfo = new ProcessStartInfo();
-                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardError = true;
-                startInfo.CreateNoWindow = true;
-                startInfo.UseShellExecute = false;
-                startInfo.FileName = "nm";
-                startInfo.Arguments = $"--extern-only --defined-only --dynamic {libraryPath}";
+                var startInfo = new ProcessStartInfo
+                {
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    FileName = "nm",
+                    Arguments = $"--extern-only --defined-only --dynamic {libraryPath}"
+                };
 
-                process.StartInfo = startInfo;
-                process.Start();
+                try
+                {
+
+                    process.StartInfo = startInfo;
+                    process.Start();
+                }
+                catch (Exception)
+                {
+                    Console.Error.WriteLine($"Failed to start '{startInfo.FileName} {startInfo.Arguments}'");
+                    Console.Error.WriteLine("Please make sure 'binutils'/'nm' is installed.");
+                    throw;
+                }
 
                 process.WaitForExit(TimeSpan.FromSeconds(5));
 
                 output = process.StandardOutput.ReadToEnd();
                 string errors = process.StandardError.ReadToEnd();
-
 
                 if (process.ExitCode != 0)
                     throw new Exception("Command failed with exit code: " + process.ExitCode, new Exception(errors));
