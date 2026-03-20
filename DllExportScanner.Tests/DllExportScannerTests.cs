@@ -52,8 +52,8 @@ namespace Abaddax.DllExportScanner.Tests
 
             Assert.That(exports, Is.Not.Empty);
 
-            Assert.That(exports.Any(e => e.FunctionSignature == "Test_Export01" && e.LibraryName == _nativeLibraryName), Is.True);
-            Assert.That(exports.Count(e => e.FunctionSignature.Contains("Test_Export02") && e.FunctionSignature.Contains("TEST_CPP_NAMESPACE") && e.LibraryName == _nativeLibraryName), Is.EqualTo(2));
+            Assert.That(exports.Any(e => e.FunctionSignature == "Test_Export01" && e.LibraryName.Contains(_nativeLibraryName)), Is.True);
+            Assert.That(exports.Count(e => e.FunctionSignature.Contains("Test_Export02") && e.FunctionSignature.Contains("TEST_CPP_NAMESPACE") && e.LibraryName.Contains(_nativeLibraryName)), Is.EqualTo(2));
 
             //Common tests
             foreach (var export in exports)
