@@ -71,7 +71,7 @@ namespace Abaddax.DllExportScanner.Internal.Linux
                     throw;
                 }
 
-                process.WaitForExit(TimeSpan.FromSeconds(5));
+                process.WaitForExit();
 
                 output = process.StandardOutput.ReadToEnd();
                 string errors = process.StandardError.ReadToEnd();
