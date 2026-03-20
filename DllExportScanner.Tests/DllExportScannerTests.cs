@@ -42,6 +42,14 @@ namespace Abaddax.DllExportScanner.Tests
 
             exports = exports.Where(x => x.FunctionSignature.Contains("Test_Export")).ToList();
 
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("Exports:");
+            foreach(var export in exports)
+            {
+                Console.WriteLine($"- {export.LibraryName} ({export.LibraryVersion}): {export.FunctionSignature}");
+            }
+            Console.WriteLine("----------------------------");
+
             Assert.That(exports, Is.Not.Empty);
 
             Assert.That(exports.Any(e => e.FunctionSignature == "Test_Export01" && e.LibraryName == _nativeLibraryName), Is.True);
