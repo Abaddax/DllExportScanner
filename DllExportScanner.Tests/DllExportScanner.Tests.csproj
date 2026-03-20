@@ -39,7 +39,9 @@
     </None>
   </ItemGroup>
     
-  <Target Name="BuildNative" BeforeTargets="Build">
+  <Target Name="BuildNative"
+          BeforeTargets="Build"
+          Condition="'$(IsCrossTargetingBuild)' == 'true'">
     <Exec Command="cmake -S ../DllExportScanner.Tests.Native -B ../DllExportScanner.Tests.Native/out/build -DCMAKE_BUILD_TYPE=$(Configuration)"/>
     <Exec Command="cmake --build ../DllExportScanner.Tests.Native/out/build --target DllExportScanner.Tests.Native --config $(Configuration)"/>
     <Exec Command="cmake --install ../DllExportScanner.Tests.Native/out/build --prefix ../DllExportScanner.Tests.Native/out/install --config $(Configuration)"/>
