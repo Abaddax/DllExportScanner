@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_call:
+
+jobs:
+  build:    
+    uses: Abaddax/workflows/.github/workflows/dotnet.build_and_test.yml@master
+    with:
+        PLATFORM: '["ubuntu-latest","windows-latest"]'
