@@ -11,4 +11,4 @@ jobs:
   build:    
     uses: Abaddax/workflows/.github/workflows/dotnet.build_and_test.yml@master
     with:
-        PLATFORM: '["windows-latest"]'
+        PLATFORM: '["ubuntu-latest","windows-latest"]'
